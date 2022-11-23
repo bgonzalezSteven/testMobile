@@ -6,7 +6,10 @@ export const pokemonStore = defineStore('pokemon', {
   state: () => ({
     pokemons: [],
     pokemonSearch: {},
-    pokemonBaseStats: []
+    pokemonBaseStats: [],
+    pokemosMovesAll: [],
+    pokemosExperienceAll: [],
+    pokemosTypes: []
   }),
   actions: {
     async getPokemon() {
@@ -14,6 +17,15 @@ export const pokemonStore = defineStore('pokemon', {
         const data = res.results
         for (const i in data) {
           api.get(`/pokemon/${parseInt(i) + 1}`).then(res => {
+            this.pokemosMovesAll.push(res.moves.length) //Movimientos
+            this.pokemosExperienceAll.push(res.base_experience) //Experiencia
+            // Tipos
+            const temp = res.types
+            for (const i in temp) {
+              if (this.pokemosTypes.indexOf(temp[i].type.name) < 0) {                
+                this.pokemosTypes.push(temp[i].type.name)
+              }
+            }
             this.pokemons.push(res)
           })
         }
@@ -24,12 +36,17 @@ export const pokemonStore = defineStore('pokemon', {
       this.pokemonSearch = this.pokemons[((this.pokemons.findIndex((info, index) => {
         if (info.id == id) {
           for (const i in info.stats) {
-            this.pokemonBaseStats.push(info.stats[i].base_stat)
+            this.pokemonBaseStats.push(info.stats[i].base_stat) // Datos para las estadisticas de la grafica
           }
           return info
         }
       })))]
-    }
-    
+    }    
+  },
+  getters: {
+    getPokemonList: (state) => state.pokemons,
+    getPokemosMoves: (state) => state.pokemosMovesAll,
+    getPokemosExperience: (state) => state.pokemosExperienceAll,
+    getPokemosType: (state) => state.pokemosTypes
   }
 })
