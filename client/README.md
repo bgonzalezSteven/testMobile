@@ -1,6 +1,5 @@
 # Pokemon App (pokemonapp)
 
-Test
 
 ## Install the dependencies
 ```bash
@@ -34,7 +33,7 @@ npm run format
 
 ### Build the app for production
 ```bash
-quasar build
+quasar build -m capcitor -T android
 ```
 
 ### Customize the configuration
