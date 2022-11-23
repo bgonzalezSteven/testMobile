@@ -22,7 +22,7 @@
         <ListPokemonVue :pokemons="state.pokemons" :columns="state.columns" />
         <q-dialog v-model="state.icon">
           <q-card style="width: 100%;">
-            <q-card-section class="row items-center q-pb-none">
+            <q-card-section class="q-pb-none">
               <q-btn class="text-primary" icon="close" flat round dense v-close-popup />
               <q-space />
             </q-card-section>
@@ -38,6 +38,10 @@
               <q-select class="q-pa-md text-capitalize" rounded filled v-model="state.type" :options="state.optionsType"
                 label="Pokemon type" use-chips stack-label multiple />
             </q-card-section>
+            <q-card-actions class="justify-between text-white q-pb-md">
+              <q-btn v-close-popup class="bg-blue-4 m_btn" label="Cancel" />
+              <q-btn  class="bg-primary m_btn"  label="Filter" />
+            </q-card-actions>
           </q-card>
         </q-dialog>
       </q-page>
@@ -109,5 +113,9 @@ div section {
 div section p {
   width: 275px;
   height: 56px;
+}
+.m_btn {
+  text-transform: none;
+  width: 7em
 }
 </style>
